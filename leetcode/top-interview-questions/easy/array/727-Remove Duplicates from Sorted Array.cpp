@@ -16,7 +16,7 @@ public:
 
 int main() {
   // make test cases with array and answer as pairs
-  vector<pair<vector<int>, int>> testCses = {
+  vector<pair<vector<int>, int>> testCases = {
       {{1, 1, 2}, 2},
       {{1, 1, 2, 3, 3}, 3},
       {{1, 1, 1, 2, 3, 3}, 3},
@@ -26,7 +26,7 @@ int main() {
 
   int testCase = 0;
 
-  for (auto tc : testCses) {
+  for (auto tc : testCases) {
     ++testCase;
     Solution s;
     int result = s.removeDuplicates(tc.first);
