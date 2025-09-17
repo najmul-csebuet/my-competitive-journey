@@ -7,7 +7,7 @@
 # compare_outputs.py
 
 def compare_outputs():
-    with open('output.txt', 'r') as out_file, open('answer.txt', 'r') as ans_file:
+    with open('out.txt', 'r') as out_file, open('ans.txt', 'r') as ans_file:
         out_lines = [line.strip() for line in out_file.readlines()]
         ans_lines = [line.strip() for line in ans_file.readlines()]
 

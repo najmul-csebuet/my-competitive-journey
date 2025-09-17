@@ -7,12 +7,13 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
+                "-DLOCAL",
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "${fileDirname}",
             },
             "problemMatcher": [
                 "$gcc"
