@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+using vi = vector<int>;
+
+void solve() {}
+
 int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
@@ -14,6 +18,9 @@ int main() {
 
   while (testCases--) {
     // take input here
+
+    // call solve function
+    solve();
   }
   return 0;
 }
