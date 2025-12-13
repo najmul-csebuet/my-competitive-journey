@@ -3,7 +3,8 @@ using namespace std;
 
 using vi = vector<int>;
 
-void solve(vi &a) {
+// AC
+void solve(vi& a) {
   // find max value in array
   int max = *max_element(a.begin(), a.end());
   cout << max << endl;
