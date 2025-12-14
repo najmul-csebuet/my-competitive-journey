@@ -3,39 +3,23 @@ using namespace std;
 
 using vi = vector<int>;
 
-void solve(vi& a) {
-  int firstEmptyIndex = 0;
-  while (true) {
-    if (firstEmptyIndex == a.size()) {
-      // no place left to swap
-      break;
-    }
-    // find min element index and check if we can place it at the first position
-    int minIndex = firstEmptyIndex;
-    for (int i = firstEmptyIndex + 1; i < a.size(); ++i) {
-      if (a[i] < a[minIndex]) {
-        minIndex = i;
+void solve(vi &a) {
+  for (int i = 0; i < a.size(); ++i) {
+    // find minimum element index in the array after index i
+    int min = i;
+    for (int j = i + 1; j < a.size(); ++j) {
+      if (a[j] < a[i] && a[j] % 2 != a[i] % 2) {
+        if (a[min] > a[j])
+          min = j;
       }
     }
-
-    if (a[firstEmptyIndex] <= a[minIndex]) {
-      // they are already lexicographically sorted
-      firstEmptyIndex++;
-      continue;
-    }
-
-    if (a[firstEmptyIndex] % 2 == a[minIndex] % 2) {
-      // parity same so no swap possible
-      firstEmptyIndex++;
-      continue;
-    }
-
-    swap(a[firstEmptyIndex], a[minIndex]);
-    firstEmptyIndex++;
+    swap(a[i], a[min]);
   }
 
-  for (int i = 0; i < a.size(); ++i) {
-    cout << a[i] << " ";
+  // print the sorted array
+  cout << a[0];
+  for (int i = 1; i < a.size(); ++i) {
+    cout << " " << a[i];
   }
   cout << endl;
 }
