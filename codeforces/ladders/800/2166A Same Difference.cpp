@@ -4,15 +4,15 @@ using namespace std;
 using vi = vector<int>;
 
 // AC
-void solve(string first, string second) {
-  sort(first.begin(), first.end());
-  sort(second.begin(), second.end());
-
-  if (first == second) {
-    cout << "YES" << endl;
-  } else {
-    cout << "NO" << endl;
+void solve(string& st) {
+  char last = st[st.size() - 1];
+  int count = 0;
+  for (char c : st) {
+    if (c != last) {
+      ++count;
+    }
   }
+  cout << count << endl;
 }
 
 int main() {
@@ -31,10 +31,10 @@ int main() {
     // take input here
     int n;
     cin >> n;
-    string first, second;
-    cin >> first >> second;
+    string st;
+    cin >> st;
     // call solve function
-    solve(first, second);
+    solve(st);
   }
   return 0;
 }
