@@ -14,7 +14,8 @@ int main() {
   freopen("out.txt", "w", stdout);
 #endif
 
-  int testCases;
+  int testCases = 1;
+  // Disable if test cases count is not given
   cin >> testCases;
 
   while (testCases--) {
