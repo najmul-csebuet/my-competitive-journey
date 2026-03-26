@@ -15,17 +15,17 @@ void solve(vi &a) {
   // Case 1: if all are in decreasing order, take no action just print as is
   // 4 3 2 1
   // 2 1
-  bool decreasing = true;
-  for (int i = 0; i < a.size() - 1; i++) {
-    if (a[i] != a[i + 1] + 1) {
-      decreasing = false;
-      break;
-    }
-  }
-  if (decreasing) {
-    print(a);
-    return;
-  }
+  //   bool decreasing = true;
+  //   for (int i = 0; i < a.size() - 1; i++) {
+  //     if (a[i] != a[i + 1] + 1) {
+  //       decreasing = false;
+  //       break;
+  //     }
+  //   }
+  //   if (decreasing) {
+  //     print(a);
+  //     return;
+  //   }
 
   // Case 2: max value is not at the start
   // 3 2 1 4
@@ -37,12 +37,18 @@ void solve(vi &a) {
     // 4 3 1 2
     // 3 1 2
     // skip until decreasing stops
-    int dec_stop = 0;
+    int dec_stop = -1;
     for (int i = 0; i < a.size() - 1; i++) {
       if (a[i] != a[i + 1] + 1) {
         dec_stop = i + 1;
         break;
       }
+    }
+    // Case 1: if all are in decreasing order, take no action just print as is
+    // 4 3 2 1
+    if (dec_stop == -1) {
+      print(a);
+      return;
     }
     int max_index = max_element(a.begin() + dec_stop, a.end()) - a.begin();
     reverse(a.begin() + dec_stop, a.begin() + max_index + 1);
