@@ -3,7 +3,12 @@ using namespace std;
 
 using vi = vector<int>;
 
-void solve() {}
+class Solution {
+public:
+  void solve() {}
+
+private:
+};
 
 int main() {
   ios_base::sync_with_stdio(false);
@@ -17,12 +22,12 @@ int main() {
   int testCases = 1;
   // Disable if test cases count is not given
   cin >> testCases;
-
   while (testCases--) {
     // take input here
 
     // call solve function
-    solve();
+    Solution s;
+    s.solve();
   }
   return 0;
 }
