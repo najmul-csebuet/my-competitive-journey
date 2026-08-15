@@ -1,6 +1,7 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
-#include <unordered_map>
+#include <vector>
 using namespace std;
 
 int solution(string s) {
@@ -8,21 +9,41 @@ int solution(string s) {
   int max_len = 0;
   unordered_map<char, int> seen;
   seen[s[0]] = 0;
-  int left = 0, right = 0;
+  int left = 0, right = 1;
 
-  for (int i = 1; i < s.size(); i++) {
-    if (seen.find(s[i]) == seen.end()) {
-      seen[s[i]] = i;
-    } else {
+  for (; right < s.size(); right++) {
+    if (seen.find(s[right]) != seen.end()) {
       // already seen
-      max_len = max(max_len, right - left + 1);
-      left = max(left, seen[s[i]] + 1);
+      max_len = max(max_len, right - left);
+      left = max(left, seen[s[right]] + 1);
     }
-    right = i;
-    seen[s[i]] = i;
+    seen[s[right]] = right;
   }
-  max_len = max(max_len, right - left + 1);
+  max_len = max(max_len, right - left);
   return max_len;
+}
+
+int solutionBetter(const string& s) {
+  vector<int> lastSeen(256, -1);
+
+  int left = 0;
+  int maxLen = 0;
+
+  for (int right = 0; right < s.size(); ++right) {
+    unsigned char c = s[right];
+
+    // If character was seen inside the current window,
+    // move left past its previous occurrence.
+    if (lastSeen[c] >= left) {
+      left = lastSeen[c] + 1;
+    }
+
+    lastSeen[c] = right;
+
+    maxLen = max(maxLen, right - left + 1);
+  }
+
+  return maxLen;
 }
 
 int main() {
@@ -31,5 +52,6 @@ int main() {
   cout << (solution("abcdabcd") == 4) << endl;
   cout << (solution("abcdamk") == 6) << endl;
   cout << (solution("abcabcabc") == 3) << endl;
+
   return 0;
 }
