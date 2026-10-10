@@ -3,7 +3,7 @@ using namespace std;
 
 // Brute force, O(n^2)
 void solution1(string input, int ans) {
-  int bestSoFarAns = 1; // 1 char long substring is alaways unique
+  int bestSoFarAns = 1;  // 1 char long substring is alaways unique
   for (int i = 0; i < input.length(); ++i) {
     for (int j = i + 1; j < input.length(); ++j) {
       vector<int> map(26, 0);
@@ -55,8 +55,9 @@ void solution2(string input, int ans) {
   cout << "Test: " << (new string[]{"failed", "passed"})[(bestSoFarAns == ans)]
        << endl;
 }
+
 // abcabcbb --> 3
-int solution(const string &input, int ans) {
+int solution(const string& input, int ans) {
   int best = 0;
   vector<int> lastIndex(128, -1);
   for (int left = 0, right = 0; right < input.length(); ++right) {
@@ -85,25 +86,41 @@ struct TestCase {
   int ans;
 };
 
+int new_solution(const string& input) {
+  int best = 0;
+  vector<int> lastIndex(127, -1);
+
+  for (int l = 0, r = 0; r < input.length(); ++r) {
+    if (lastIndex[input[r]] == -1 || (lastIndex[input[r]] < l)) {
+      // not seen yet
+      // save postion
+      lastIndex[input[r]] = r;
+      best = max(best, r - l + 1);
+      continue;
+    }
+
+    // already seen this char
+    // update left pointer l
+    l = lastIndex[input[r]] + 1;
+    lastIndex[input[r]] = r;
+  }
+
+  return best;
+}
+
 int main() {
-  // solution1("abcabcbb", 3);
-  // solution1("abcabcdbb", 4);
-  // solution1("bbbb", 1);
-  // solution1("abcdefgh", 8);
-  // solution1("dvdf", 3);
-
-  // solution2("abcabcbb", 3);
-  // solution2("abcabcdbb", 4);
-  // solution2("bbbb", 1);
-  // solution2("abcdefgh", 8);
-  // solution2("dvdf", 3);
-
   vector<TestCase> testCases = {{"abcabcbb", 3}, {"abcabcdbb", 4}, {"bbbb", 1},
                                 {"abcdefgh", 8}, {"dvdf", 3},      {"abba", 2},
                                 {"tmmzuxt", 5}};
 
-  for (const auto &tc : testCases) {
-    solution(tc.input, tc.ans);
+  for (const auto& tc : testCases) {
+    // solution(tc.input, tc.ans);
+    int ans = new_solution(tc.input);
+    if (ans == tc.ans) {
+      cout << "Passed" << endl;
+    } else {
+      cout << "Failed: " << tc.input << ": " << ans << " -- " << tc.ans << endl;
+    }
   }
 
   return 0;
