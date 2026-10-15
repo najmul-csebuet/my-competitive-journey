@@ -1,4 +1,18 @@
+/*
+Problem: Longest Substring Without Repeating CharactersGiven a string s, find
+the length of the longest substring without repeating characters.Example 1:
+Input: s = "abcabcbb" $\rightarrow$ Output: 3 (The answer is "abc", with the
+length of 3).Example 2: Input: s = "bbbbb" $\rightarrow$ Output: 1 (The answer
+is "b", with the length of 1).
+*/
+
 #include <bits/stdc++.h>
+
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+
 using namespace std;
 
 // Brute force, O(n^2)
@@ -81,32 +95,28 @@ int solution(const string& input, int ans) {
   return best;
 }
 
-struct TestCase {
-  string input;
-  int ans;
-};
-
+// Sliding window / Two pointer algorithm
 int new_solution(const string& input) {
   int best = 0;
-  vector<int> lastIndex(127, -1);
+  // Use size 256 to safely cover all extended ASCII possibilities
+  // Cast to unsigned char to prevent signed char out-of-bounds bugs
+  vector<int> lastIndex(256, -1);
 
   for (int l = 0, r = 0; r < input.length(); ++r) {
-    if (lastIndex[input[r]] == -1 || (lastIndex[input[r]] < l)) {
-      // not seen yet
-      // save postion
-      lastIndex[input[r]] = r;
-      best = max(best, r - l + 1);
-      continue;
-    }
+    unsigned char curr_char = input[r];
 
-    // already seen this char
-    // update left pointer l
-    l = lastIndex[input[r]] + 1;
-    lastIndex[input[r]] = r;
+    l = max(l, lastIndex[curr_char] + 1);
+    best = max(best, r - l + 1);
+    lastIndex[curr_char] = r;
   }
 
   return best;
 }
+
+struct TestCase {
+  string input;
+  int ans;
+};
 
 int main() {
   vector<TestCase> testCases = {{"abcabcbb", 3}, {"abcabcdbb", 4}, {"bbbb", 1},
