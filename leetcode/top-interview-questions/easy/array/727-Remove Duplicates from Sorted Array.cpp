@@ -2,21 +2,27 @@
 using namespace std;
 
 class Solution {
-public:
-  int removeDuplicates(vector<int> &nums) {
-    int last = 0;
-    for (int i = 1; i < nums.size(); i++) {
-      if (nums[i] != nums[last]) {
-        nums[++last] = nums[i];
+ public:
+  int removeDuplicates(vector<int>& nums) {
+    // 1, 1, 2, 3, 3
+    int lastFilled = 0;
+    for (int i = 1; i < nums.size(); ++i) {
+      if (nums[lastFilled] < nums[i]) {
+        nums[++lastFilled] = nums[i];
       }
     }
-    return last + 1;
+    return lastFilled + 1;
   }
+};
+
+struct TestCase {
+  vector<int> nums;
+  int uniqueCount;
 };
 
 int main() {
   // make test cases with array and answer as pairs
-  vector<pair<vector<int>, int>> testCases = {
+  vector<TestCase> testCases = {
       {{1, 1, 2}, 2},
       {{1, 1, 2, 3, 3}, 3},
       {{1, 1, 1, 2, 3, 3}, 3},
@@ -29,12 +35,12 @@ int main() {
   for (auto tc : testCases) {
     ++testCase;
     Solution s;
-    int result = s.removeDuplicates(tc.first);
+    int result = s.removeDuplicates(tc.nums);
 
     cout << "Test case #" << testCase << ": ";
-    if (result != tc.second) {
+    if (result != tc.uniqueCount) {
       cout << "FAILED" << "\n";
-      cout << "expected: " << tc.second << "\n";
+      cout << "expected: " << tc.uniqueCount << "\n";
       cout << "actual: " << result << "\n";
       continue;
     }
