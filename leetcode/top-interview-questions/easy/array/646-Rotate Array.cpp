@@ -1,3 +1,5 @@
+// https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/646/
+
 #include <algorithm>
 #include <iostream>
 #include <vector>

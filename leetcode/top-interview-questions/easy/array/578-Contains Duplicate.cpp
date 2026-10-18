@@ -1,9 +1,11 @@
+// https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/578/
+
 #include <bits/stdc++.h>
 using namespace std;
 
 class Solution {
-public:
-  bool containsDuplicate(vector<int> &nums) {
+ public:
+  bool containsDuplicate(vector<int>& nums) {
     // use a map to store the frequency of each element
     // then check if any number appears more than once
     map<int, int> freq;
@@ -21,8 +23,8 @@ public:
 
 // another solution
 class Solution2 {
-public:
-  bool containsDuplicate(vector<int> &nums) {
+ public:
+  bool containsDuplicate(vector<int>& nums) {
     // use a set to store the elements
     // then check if the size of the set is less than the size of the vector
     set<int> s(nums.begin(), nums.end());
@@ -32,8 +34,8 @@ public:
 
 // another solution
 class Solution3 {
-public:
-  bool containsDuplicate(vector<int> &nums) {
+ public:
+  bool containsDuplicate(vector<int>& nums) {
     // first sort the vector
     sort(nums.begin(), nums.end());
     // then check if the adjacent elements are equal
@@ -48,8 +50,8 @@ public:
 
 // now use unordered_set
 class Solution4 {
-public:
-  bool containsDuplicate(vector<int> &nums) {
+ public:
+  bool containsDuplicate(vector<int>& nums) {
     // use a set to store the elements
     // then check if the size of the set is less than the size of the vector
     unordered_set<int> s(nums.begin(), nums.end());
@@ -59,8 +61,8 @@ public:
 
 // now use unordered_set and find method
 class Solution5 {
-public:
-  bool containsDuplicate(vector<int> &nums) {
+ public:
+  bool containsDuplicate(vector<int>& nums) {
     // use a set to store the elements
     // then check if the size of the set is less than the size of the vector
     unordered_set<int> s;
@@ -76,8 +78,8 @@ public:
 
 // now use unordered_set and count method
 class Solution6 {
-public:
-  bool containsDuplicate(vector<int> &nums) {
+ public:
+  bool containsDuplicate(vector<int>& nums) {
     // use a set to store the elements
     // then check if the size of the set is less than the size of the vector
     unordered_set<int> s;
@@ -93,8 +95,8 @@ public:
 
 // now use unordered_map
 class Solution7 {
-public:
-  bool containsDuplicate(vector<int> &nums) {
+ public:
+  bool containsDuplicate(vector<int>& nums) {
     // use a map to store the frequency of each element
     // then check if any number appears more than once
     unordered_map<int, int> freq;
