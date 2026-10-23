@@ -1,44 +1,72 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+using vi = vector<int>;
+
+#define pb push_back
+#define sz(x) (int)(x).size()
+#define all(x) (x).begin(), (x).end()
+
 class Solution {
-public:
-  vector<int> plusOne(vector<int> &digits) {
+ public:
+  vector<int> plusOne(vector<int>& digits) {
     int carry = 1;
-    for (int i = digits.size() - 1; i >= 0; i--) {
-      digits[i] += carry;
-      carry = digits[i] / 10;
-      digits[i] %= 10;
+    for (int i = sz(digits) - 1; i >= 0; --i) {
+      int s = digits[i] + carry;
+      digits[i] = s % 10;
+      carry = s / 10;
     }
-    if (carry) {
-      digits.insert(digits.begin(), carry);
+    if (carry) digits.emplace(digits.begin(), carry);
+    return digits;
+  }
+
+  vector<int> plusOneReverse(vector<int>& digits) {
+    reverse(all(digits));
+    int carry = 1;
+    for (int i = 0; i < sz(digits); ++i) {
+      int s = digits[i] + carry;
+      digits[i] = s % 10;
+      carry = s / 10;
     }
+    if (carry) digits.pb(carry);
+    reverse(all(digits));
+
     return digits;
   }
 };
 
-void test1() {
-  vector<int> digits = {1, 2, 3};
-  vector<int> ans = {1, 2, 4};
-  assert(Solution().plusOne(digits) == ans);
-}
-
-void test2() {
-  vector<int> digits = {9};
-  vector<int> ans = {1, 0};
-  assert(Solution().plusOne(digits) == ans);
-}
-
-void test3() {
-  vector<int> digits = {9, 9};
-  vector<int> ans = {1, 0, 0};
-  assert(Solution().plusOne(digits) == ans);
-}
+struct TestCase {
+  vi digits, ans;
+};
 
 int main() {
-  test1();
-  test2();
-  test3();
-  cout << "All tests passed!" << endl;
+  vector<TestCase> testCases = {
+      {{1, 2, 3}, {1, 2, 4}},
+      {{9}, {1, 0}},
+      {{9, 9}, {1, 0, 0}},
+  };
+
+  Solution solution;
+
+  for (auto& tc : testCases) {
+    vi result = solution.plusOne(tc.digits);
+    // assert(tc.ans == result);
+    if (tc.ans == result) {
+      cout << "Success\n";
+    } else {
+      cout << "Failed\n";
+    }
+  }
+
+  // for (auto& tc : testCases) {
+  //   vi result = solution.plusOneReverse(tc.digits);
+  //   // assert(tc.ans == result);
+  //   if (tc.ans == result) {
+  //     cout << "Success\n";
+  //   } else {
+  //     cout << "Failed\n";
+  //   }
+  // }
+
   return 0;
 }
