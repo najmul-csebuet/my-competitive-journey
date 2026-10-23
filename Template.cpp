@@ -1,15 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Type Aliases
+using ll = long long;
 using vi = vector<int>;
+using vll = vector<long long>;
+using mii = map<int, int>;
+using pii = pair<int, int>;
+using umii = unordered_map<int, int>;
+
+// Useful Macros
+#define pb push_back
+#define all(x) (x).begin(), (x).end()
+#define sz(x) (int)(x).size()
+#define rep(i, a, b) for (int i = (a); i < (b); ++i)
+#define rep0(n) for (int i = 0; i < (n); ++i)
+// Note: If you nest these, use different variable names or stick to the
+// 3-parameter version.
+#define repr(i, a, b) for (int i = (a) - 1; i >= (b); --i)
 
 class Solution {
-public:
+ public:
   void solve() {}
 
-private:
+ private:
 };
 
+// For Codeforces input output handling
 int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
@@ -31,3 +48,34 @@ int main() {
   }
   return 0;
 }
+
+// For leetcode
+
+/*
+struct TestCase {
+  vi nums1, nums2;
+  vi ans;
+};
+
+int main() {
+  vector<TestCase> testCases = {{{1, 2, 2, 1}, {2, 2}, {2, 2}},
+                                {{4, 9, 5}, {9, 4, 9, 8, 4}, {4, 9}}};
+
+  Solution solution;
+
+  for (auto& tc : testCases) {
+    vi result = solution.intersect(tc.nums1, tc.nums2);
+
+    sort(result.begin(), result.end());
+    sort(tc.ans.begin(), tc.ans.end());
+
+    if (tc.ans == result) {
+      cout << "Success\n";
+    } else {
+      cout << "Failed\n";
+    }
+  }
+
+  return 0;
+}
+*/
