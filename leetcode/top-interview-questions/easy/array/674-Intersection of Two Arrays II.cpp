@@ -5,6 +5,7 @@ using vi = vector<int>;
 using pii = pair<int, int>;
 using mii = map<int, int>;
 using umii = unordered_map<int, int>;
+
 #define pb push_back
 
 class Solution0 {
@@ -44,7 +45,7 @@ class Solution {
       return intersect(nums2, nums1);
     }
 
-    mii freqMap;
+    umii freqMap;
     for (int a : nums1) {
       freqMap[a]++;
     }
@@ -76,7 +77,7 @@ int main() {
 
     sort(result.begin(), result.end());
     sort(tc.ans.begin(), tc.ans.end());
-    
+
     if (tc.ans == result) {
       cout << "Success\n";
     } else {
