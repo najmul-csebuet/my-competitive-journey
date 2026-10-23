@@ -53,21 +53,20 @@ int main() {
 
 /*
 struct TestCase {
-  vi nums1, nums2;
+  vi nums;
   vi ans;
 };
 
 int main() {
-  vector<TestCase> testCases = {{{1, 2, 2, 1}, {2, 2}, {2, 2}},
-                                {{4, 9, 5}, {9, 4, 9, 8, 4}, {4, 9}}};
+  vector<TestCase> testCases = {
+        {{0,1,0,3,12}, {1,3,12,0,0}},
+        {{0}, {0}}
+    };
 
   Solution solution;
 
   for (auto& tc : testCases) {
-    vi result = solution.intersect(tc.nums1, tc.nums2);
-
-    sort(result.begin(), result.end());
-    sort(tc.ans.begin(), tc.ans.end());
+    vi result = solution.solve(tc.nums);
 
     if (tc.ans == result) {
       cout << "Success\n";
