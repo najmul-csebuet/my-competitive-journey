@@ -59,6 +59,13 @@ class Solution {
     }
     return result;
   }
+
+  vi intersect(vi& nums1, vi& nums2) {
+    if (nums1.size() > nums2.size()) {
+      return intersect(nums2, nums1);
+    }
+    vi result;
+  }
 };
 
 struct TestCase {
