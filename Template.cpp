@@ -66,7 +66,7 @@ int main() {
   Solution solution;
 
   for (auto& tc : testCases) {
-    vi result = solution.solve(tc.nums);
+    vi result = solution.solve();
 
     if (tc.ans == result) {
       cout << "Success\n";
