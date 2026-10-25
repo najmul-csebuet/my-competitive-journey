@@ -23,7 +23,7 @@ using umii = unordered_map<int, int>;
 
 class Solution {
  public:
-  vi twoSum(vi& nums, int target) {
+  vi twoSumWrong(vi& nums, int target) {
     sort(all(nums));
 
     vi result;
@@ -43,6 +43,48 @@ class Solution {
     }
 
     return result;
+  }
+
+  // Ok AC, but this can be improved
+  vi twoSum_AC_Bit_Slow(vi& nums, int target) {
+    unordered_map<int, vi> tracker;
+    /*
+    Nums: 1, 1, 2, 2
+          1 ---> 0, 1
+          2 ---> 2, 3
+    */
+    rep0(sz(nums)) { tracker[nums[i]].pb(i); }
+
+    vi ans;
+    rep0(sz(nums)) {
+      int other = target - nums[i];
+      if (nums[i] != other) {
+        if (sz(tracker[other])) {
+          ans = {i, tracker[other][0]};
+          break;
+        }
+      } else {
+        if (sz(tracker[other]) > 1) {
+          ans = {i, tracker[other][1]};
+          break;
+        }
+      }
+    }
+    return ans;
+  }
+
+  vi twoSum(vi& nums, int target) {
+    umii seenMap;
+    vi ans;
+    rep0(sz(nums)) {
+      int other = target - nums[i];
+      if (seenMap.find(other) != seenMap.end()) {
+        ans = {seenMap[other], i};
+        break;
+      }
+      seenMap[nums[i]] = i;
+    }
+    return ans;
   }
 };
 
