@@ -24,7 +24,7 @@ using umii = unordered_map<int, int>;
 
 class Solution {
  public:
-  bool isValidSudoku(vector<vector<char>>& board) {
+  bool isValidSudoku_AC(vector<vector<char>>& board) {
     // first check all rows
     rep(row, 0, sz(board)) {
       sc nums;
@@ -73,6 +73,31 @@ class Solution {
     }
 
     // valid sudoku
+    return true;
+  }
+
+  bool isValidSudoku(vector<vector<char>>& board) {
+    unordered_set<string> seen;
+
+    for (int i = 0; i < 9; ++i) {
+      for (int j = 0; j < 9; ++j) {
+        char curr = board[i][j];
+        if (curr == '.') continue;
+
+        string row_tag = string(1, curr) + "@row" + to_string(i);
+        string col_tag = string(1, curr) + "@col" + to_string(j);
+        string box_tag = string(1, curr) + "@box" + to_string(i / 3) + "_" +
+                         to_string(j / 3);
+
+        if (seen.count(row_tag) || seen.count(col_tag) || seen.count(box_tag)) {
+          return false;
+        }
+
+        seen.insert(row_tag);
+        seen.insert(col_tag);
+        seen.insert(box_tag);
+      }
+    }
     return true;
   }
 };
