@@ -101,17 +101,75 @@ class Solution {
     return true;
   }
 
-  bool isValidSudoku(vector<vector<char>>& board) {
+  bool isValidSudoku_SmartIndexing(vector<vector<char>>& board) {
+    /*
+    Three flags are used to check whether a number appear.
+    used1: check each row
+    used2: check each column
+    used3: check each sub-boxes
+    */
     int used1[9][9] = {0}, used2[9][9] = {0}, used3[9][9] = {0};
 
-    for (int i = 0; i < board.size(); ++i)
-      for (int j = 0; j < board[i].size(); ++j)
-        if (board[i][j] != '.') {
-          int num = board[i][j] - '0' - 1, k = i / 3 * 3 + j / 3;
-          if (used1[i][num] || used2[j][num] || used3[k][num]) return false;
-          used1[i][num] = used2[j][num] = used3[k][num] = 1;
+    for (int i = 0; i < board.size(); ++i) {
+      for (int j = 0; j < board[i].size(); ++j) {
+        if (board[i][j] == '.') continue;
+
+        int num = board[i][j] - '0' - 1;
+        int k = i / 3 * 3 + j / 3;
+
+        if (used1[i][num] || used2[j][num] || used3[k][num]) return false;
+
+        used1[i][num] = used2[j][num] = used3[k][num] = 1;
+      }
+    }
+
+    return true;
+  }
+
+  bool isValidSudoku_BitManiplulation(vector<vector<char>>& board) {
+    int row[9] = {0}, col[9] = {0}, rect[9] = {0};
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (board[i][j] == '.') continue;
+        int k = board[i][j] - '0';
+        int ri = (i / 3) * 3 + (j / 3);
+
+        if ((row[i] >> k & 1) == 1 || (col[j] >> k & 1) == 1 ||
+            (rect[ri] >> k & 1) == 1)
+          return false;
+
+        row[i] |= 1 << k;
+        col[j] |= 1 << k;
+        rect[ri] |= 1 << k;
+      }
+    }
+    return true;
+  }
+
+  bool isValidSudoku_gemini(vector<vector<char>>& board) {
+    int rows[9] = {0};
+    int cols[9] = {0};
+    int boxes[9] = {0};
+
+    for (int i = 0; i < 9; ++i) {
+      for (int j = 0; j < 9; ++j) {
+        if (board[i][j] == '.') continue;
+
+        int num = board[i][j] - '1';  // Convert '1'-'9' to 0-8
+        int box_idx = (i / 3) * 3 + (j / 3);
+        int bit = 1 << num;  // Create a bitmask for the current number
+
+        // Check if the bit is already set in the row, column, or box
+        if ((rows[i] & bit) || (cols[j] & bit) || (boxes[box_idx] & bit)) {
+          return false;
         }
 
+        // Mark the bit as seen
+        rows[i] |= bit;
+        cols[j] |= bit;
+        boxes[box_idx] |= bit;
+      }
+    }
     return true;
   }
 };
