@@ -4,6 +4,8 @@ using namespace std;
 // Type Aliases
 using ll = long long;
 using vi = vector<int>;
+using vc = vector<char>;
+using vvi = vector<vector<int>>;
 using vll = vector<long long>;
 using mii = map<int, int>;
 using pii = pair<int, int>;
