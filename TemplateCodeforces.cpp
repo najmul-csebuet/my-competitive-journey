@@ -48,33 +48,3 @@ int main() {
   }
   return 0;
 }
-
-// For leetcode
-
-/*
-struct TestCase {
-  vi nums;
-  vi ans;
-};
-
-int main() {
-  vector<TestCase> testCases = {
-        {{0,1,0,3,12}, {1,3,12,0,0}},
-        {{0}, {0}}
-    };
-
-  Solution solution;
-
-  for (auto& tc : testCases) {
-    vi result = solution.solve();
-
-    if (tc.ans == result) {
-      cout << "Success\n";
-    } else {
-      cout << "Failed\n";
-    }
-  }
-
-  return 0;
-}
-*/
