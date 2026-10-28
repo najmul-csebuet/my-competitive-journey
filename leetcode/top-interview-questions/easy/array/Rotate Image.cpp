@@ -24,11 +24,12 @@ using umii = unordered_map<int, int>;
 
 class Solution {
  public:
-  void rotate(vector<vector<int>>& matrix) {
+  void rotate(vvi& matrix) {
     int n = sz(matrix);
     rep(i, 0, n) {
-      rep(j, 0, n) { swap(matrix[i][j], matrix[j][n - 1 - i]); }
+      rep(j, i + 1, n) { swap(matrix[i][j], matrix[j][i]); }
     }
+    rep(i, 0, n) { reverse(all(matrix[i])); }
   }
 };
 
