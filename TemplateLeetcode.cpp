@@ -23,22 +23,29 @@ using umii = unordered_map<int, int>;
 
 class Solution {
  public:
-  vi solve(vi& nums) {}
+  int solve(int nums) {}
 };
 
 struct TestCase {
-  vi nums;
-  vi ans;
+  int input;
+  int ans;
 };
 
+vector<TestCase> getTests() {
+  TestCase case1 = {1, 2};
+  TestCase case2 = {3, 4};
+  TestCase case3 = {5, 6};
+
+  return {case1, case2, case3};
+}
+
 int main() {
-  vector<TestCase> testCases = {{{0, 1, 0, 3, 12}, {1, 3, 12, 0, 0}},
-                                {{0}, {0}}};
+  auto testCases = getTests();
 
   Solution solution;
 
   for (auto& tc : testCases) {
-    auto result = solution.solve(tc.nums);
+    auto result = solution.solve(tc.input);
 
     if (tc.ans == result) {
       cout << "Success\n";
