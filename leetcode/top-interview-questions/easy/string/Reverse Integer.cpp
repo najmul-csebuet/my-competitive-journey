@@ -1,3 +1,5 @@
+// https://leetcode.com/explore/interview/card/top-interview-questions-easy/127/array/880/
+
 #include <bits/stdc++.h>
 using namespace std;
 
