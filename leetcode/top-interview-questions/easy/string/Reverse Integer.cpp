@@ -24,25 +24,16 @@ using umii = unordered_map<int, int>;
 class Solution {
  public:
   int reverse(int x) {
-    if (x == 0) return 0;
-    int flag = x < 0 ? -1 : 1;
-    x = x * flag;  // make it positive
-
-    // trim trailing 0's first
-    while (x % 10 == 0) {
-      x /= 10;
-    }
-
-    // 120 --> 12
     int ans = 0;
-    while (x > 0) {
+    while (x != 0) {
       int d = x % 10;
-      ans = 10 * ans + d;
-      if (ans < 0) return 0;  // if overflow during reversal
       x /= 10;
+      // Check for overflow before it happens
+      if (ans > INT_MAX / 10 || (ans == INT_MAX / 10 && d > 7)) return 0;
+      if (ans < INT_MIN / 10 || (ans == INT_MIN / 10 && d == -9)) return 0;
+      ans = 10 * ans + d;
     }
-
-    return ans * flag;
+    return ans;
   }
 };
 
@@ -53,7 +44,7 @@ struct TestCase {
 
 int main() {
   vector<TestCase> testCases = {
-      {123, 321}, {-123, -321}, {120, 21}, {1534236469, 0}};
+      {-123, -321}, {123, 321}, {120, 21}, {1534236469, 0}};
 
   Solution solution;
 
