@@ -26,7 +26,14 @@ using umii = unordered_map<int, int>;
 class Solution {
  public:
   // unicode chars
-  bool isAnagram(string s, string t) {}
+  bool isAnagram(string s, string t) {
+    // first lets assume all english letters
+    vi sMap(123, 0), tMap(123, 0);
+    rep0(sz(s)) sMap[s[i]]++;
+    rep0(sz(t)) tMap[t[i]]++;
+
+    return sMap == tMap;
+  }
 };
 
 struct TestCase {
