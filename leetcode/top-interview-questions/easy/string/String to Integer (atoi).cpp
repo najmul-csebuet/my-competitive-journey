@@ -44,14 +44,11 @@ class Solution {
     if (s[i] == '-') {
       sign = -1;
       ++i;
-    }
-
-    if (s[i] == '+') {
+    } else if (s[i] == '+') {
       sign = +1;
       ++i;
-    }
-
-    if (isalnum(s[i])) sign = +1;
+    } else if (isalnum(s[i]))
+      sign = +1;
 
     int ans = 0;
     while (i < sz(s)) {
@@ -64,17 +61,23 @@ class Solution {
       }
 
       int d = s[i++] - '0';
+      if (sign == -1) d = -d;
+
+      if (sign == 1) {
+        if (ans > INT_MAX / 10 || (ans == INT_MAX / 10 && d > 7)) {
+          ans = INT_MAX;
+          break;
+        }
+      } else {
+        // -1, negative number
+        if (ans > 0) ans = -ans;
+        if (ans < INT_MIN / 10 || (ans == INT_MIN / 10 && d == -9)) {
+          ans = INT_MIN;
+          break;
+        }
+      }
+
       ans = 10 * ans + d;
-
-      if (ans > INT_MAX / 10 || (ans == INT_MAX / 10 && d > 7)) {
-        ans = INT_MAX;
-        break;
-      }
-
-      if (ans < INT_MIN / 10 || (ans == INT_MIN / 10 && d == -9)) {
-        ans = INT_MIN;
-        break;
-      }
     }
     return ans;
   }
@@ -86,14 +89,15 @@ struct TestCase {
 };
 
 vector<TestCase> getTests() {
+  TestCase case0 = {"2147483646", 2147483646};
   TestCase case1 = {"42", 42};
   TestCase case2 = {" -042", -42};
   TestCase case3 = {"1337c0d3", 1337};
   TestCase case4 = {"0-1", 0};
   TestCase case5 = {"words and 987", 0};
 
-  //   return {case1, case2, case3, case4, case5};
-  return {case2};
+  return {case0, case1, case2, case3, case4, case5};
+  // return {case2};
 }
 
 int main() {
