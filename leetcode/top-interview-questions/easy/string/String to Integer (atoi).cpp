@@ -26,23 +26,16 @@ using umii = unordered_map<int, int>;
 class Solution {
  public:
   int myAtoi(string s) {
-    string filtered;
-
     // Skip leading whitespaces
     int i = 0, n = sz(s);
     while (i < n && isspace(s[i])) {
       ++i;
     }
 
-    // Empty string or only whitespace
-    if (i == n) return 0;
-
     // Determine sign
     int sign = 1;
-    if (s[i] == '-') {
-      sign = -1;
-      ++i;
-    } else if (s[i] == '+') {
+    if (i < n && (s[i] == '+' || s[i] == '-')) {
+      if (s[i] == '-') sign = -1;
       ++i;
     }
 
@@ -54,15 +47,23 @@ class Solution {
       d *= sign;
 
       if (ans >= 0) {
-        if (ans > INT_MAX / 10 || (ans == INT_MAX / 10 && d > 7)) {
+        if (ans > (INT_MAX - d) / 10) {
           ans = INT_MAX;
           break;
         }
+        // if (ans > INT_MAX / 10 || (ans == INT_MAX / 10 && d > 7)) {
+        //   ans = INT_MAX;
+        //   break;
+        // }
       } else {
-        if (ans < INT_MIN / 10 || (ans == INT_MIN / 10 && d == -9)) {
+        if (ans < (INT_MIN - d) / 10) {
           ans = INT_MIN;
           break;
         }
+        // if (ans < INT_MIN / 10 || (ans == INT_MIN / 10 && d == -9)) {
+        //   ans = INT_MIN;
+        //   break;
+        // }
       }
 
       ans = 10 * ans + d;
@@ -103,7 +104,6 @@ struct TestCase {
 };
 
 vector<TestCase> getTests() {
-  TestCase case0 = {"2147483646", 2147483646};
   TestCase case1 = {"42", 42};
   TestCase case2 = {" -042", -42};
   TestCase case3 = {"1337c0d3", 1337};
@@ -121,26 +121,32 @@ vector<TestCase> getTests() {
   TestCase case15 = {"2147483648", INT_MAX};
   TestCase case16 = {"-2147483648", INT_MIN};
   TestCase case17 = {"-2147483649", INT_MIN};
+  TestCase case18 = {"2147483646", 2147483646};
 
-  return {case0,  case1,  case2,  case3,  case4,  case5,
-          case6,  case7,  case8,  case9,  case10, case11,
-          case12, case13, case14, case15, case16, case17};
+  return {case1,  case2,  case3,  case4,  case5,  case6,
+          case7,  case8,  case9,  case10, case11, case12,
+          case13, case14, case15, case16, case17, case18};
 }
 
 int main() {
   auto testCases = getTests();
-
+  int successCount = 0;
   Solution solution;
 
-  for (auto& tc : testCases) {
+  rep0(sz(testCases)) {
+    auto& tc = testCases[i];
     // auto result = solution.myAtoi(tc.input);
     auto result = solution.myAtoiClaudeAI(tc.input);
 
     if (tc.ans == result) {
-      cout << "Success\n";
+      ++successCount;
     } else {
-      cout << "Failed\n";
+      cout << "Failed Test case: " << i + 1 << endl;
     }
+  }
+
+  if (successCount == testCases.size()) {
+    cout << "\n\nAll passed!\n\n";
   }
 
   return 0;
