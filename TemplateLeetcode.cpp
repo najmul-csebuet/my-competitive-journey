@@ -41,17 +41,23 @@ vector<TestCase> getTests() {
 
 int main() {
   auto testCases = getTests();
-
+  int successCount = 0;
   Solution solution;
 
-  for (auto& tc : testCases) {
+  rep0(sz(testCases)) {
+    auto& tc = testCases[i];
+    // auto result = solution.myAtoi(tc.input);
     auto result = solution.solve(tc.input);
 
     if (tc.ans == result) {
-      cout << "Success\n";
+      ++successCount;
     } else {
-      cout << "Failed\n";
+      cout << "Failed Test case: " << i + 1 << endl;
     }
+  }
+
+  if (successCount == testCases.size()) {
+    cout << "\n\nAll passed!\n\n";
   }
 
   return 0;
