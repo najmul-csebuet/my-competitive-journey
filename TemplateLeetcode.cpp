@@ -5,6 +5,7 @@ using namespace std;
 using ll = long long;
 using vi = vector<int>;
 using vc = vector<char>;
+using vs = vector<string>;
 using vvi = vector<vector<int>>;
 using vll = vector<long long>;
 using mii = map<int, int>;
@@ -46,7 +47,6 @@ int main() {
 
   rep0(sz(testCases)) {
     auto& tc = testCases[i];
-    // auto result = solution.myAtoi(tc.input);
     auto result = solution.solve(tc.input);
 
     if (tc.ans == result) {
