@@ -56,7 +56,7 @@ int main() {
     }
   }
 
-  if (successCount == testCases.size()) {
+  if (successCount == sz(testCases)) {
     cout << "\n\nAll passed!\n\n";
   }
 
