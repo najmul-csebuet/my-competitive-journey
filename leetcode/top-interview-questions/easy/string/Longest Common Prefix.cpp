@@ -27,15 +27,7 @@ using umii = unordered_map<int, int>;
 class Solution {
  public:
   string longestCommonPrefix(vs& strs) {
-    if (sz(strs) == 1) {
-      return strs[0];
-    }
-
     rep(prefixLength, 0, sz(strs[0])) {
-      if (sz(strs[0]) == prefixLength) {
-        return strs[0];
-      }
-
       char ch = strs[0][prefixLength];
 
       rep(j, 1, sz(strs)) {
@@ -62,8 +54,16 @@ vector<TestCase> getTests() {
   TestCase case2 = {{"dog", "racecar", "car"}, ""};
   TestCase case3 = {{"abb", "abc"}, "ab"};
 
-  // return {case3};
-  return {case1, case2, case3};
+  TestCase case4 = {{"a"}, "a"};        // single string
+  TestCase case5 = {{""}, ""};          // single empty string
+  TestCase case6 = {{"", "b"}, ""};     // empty string in the list
+  TestCase case7 = {{"ab", "a"}, "a"};  // later string is a prefix of the first
+  TestCase case8 = {{"a", "ab"}, "a"};  // first string is the prefix
+  TestCase case9 = {{"same", "same", "same"}, "same"};
+  TestCase case10 = {{"abc", "abd", "abx", "ab"},
+                     "ab"};  // shortest string is last
+  return {case1, case2, case3, case4, case5,
+          case6, case7, case8, case9, case10};
 }
 
 int main() {
@@ -73,7 +73,6 @@ int main() {
 
   rep0(sz(testCases)) {
     auto& tc = testCases[i];
-    // auto result = solution.myAtoi(tc.input);
     auto result = solution.longestCommonPrefix(tc.input);
 
     if (tc.ans == result) {
