@@ -27,9 +27,28 @@ using umii = unordered_map<int, int>;
 class Solution {
  public:
   string longestCommonPrefix(vs& strs) {
-    rep(i, 0, sz(strs)) {
-        
+    if (sz(strs) == 1) {
+      return strs[0];
     }
+
+    rep(prefixLength, 0, sz(strs[0])) {
+      if (sz(strs[0]) == prefixLength) {
+        return strs[0];
+      }
+
+      char ch = strs[0][prefixLength];
+
+      rep(j, 1, sz(strs)) {
+        if (sz(strs[j]) == prefixLength) {
+          return strs[j];
+        }
+
+        if (ch != strs[j][prefixLength]) {
+          return strs[0].substr(0, prefixLength);
+        }
+      }
+    }
+    return strs[0];
   }
 };
 
@@ -41,8 +60,10 @@ struct TestCase {
 vector<TestCase> getTests() {
   TestCase case1 = {{"flower", "flow", "flight"}, "fl"};
   TestCase case2 = {{"dog", "racecar", "car"}, ""};
+  TestCase case3 = {{"abb", "abc"}, "ab"};
 
-  return {case1, case2};
+  // return {case3};
+  return {case1, case2, case3};
 }
 
 int main() {
