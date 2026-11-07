@@ -27,20 +27,20 @@ using umii = unordered_map<int, int>;
 class Solution {
  public:
   string longestCommonPrefix(vs& strs) {
-    rep(prefixLength, 0, sz(strs[0])) {
-      char ch = strs[0][prefixLength];
+    const string& first = strs[0];
 
+    rep(i, 0, sz(first)) {
       rep(j, 1, sz(strs)) {
-        if (sz(strs[j]) == prefixLength) {
+        if (i == sz(strs[j])) {
           return strs[j];
         }
 
-        if (ch != strs[j][prefixLength]) {
-          return strs[0].substr(0, prefixLength);
+        if (first[i] != strs[j][i]) {
+          return first.substr(0, i);
         }
       }
     }
-    return strs[0];
+    return first;
   }
 };
 
