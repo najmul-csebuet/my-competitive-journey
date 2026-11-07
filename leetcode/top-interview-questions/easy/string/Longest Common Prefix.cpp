@@ -45,46 +45,54 @@ class Solution {
 };
 
 struct TestCase {
+  string name;
   vs input;
   string ans;
 };
 
 vector<TestCase> getTests() {
-  TestCase case1 = {{"flower", "flow", "flight"}, "fl"};
-  TestCase case2 = {{"dog", "racecar", "car"}, ""};
-  TestCase case3 = {{"abb", "abc"}, "ab"};
+  return {
+      {"leetcode example 1", {"flower", "flow", "flight"}, "fl"},
+      {"leetcode example 2", {"dog", "racecar", "car"}, ""},
+      {"mismatch at last char", {"abb", "abc"}, "ab"},
+      {"single string", {"a"}, "a"},
+      {"single empty string", {""}, ""},
+      {"empty string in list", {"", "b"}, ""},
+      {"later string is prefix of first", {"ab", "a"}, "a"},
+      {"first string is prefix of later", {"a", "ab"}, "a"},
+      {"all identical", {"same", "same", "same"}, "same"},
+      {"shortest string is last", {"abc", "abd", "abx", "ab"}, "ab"},
+  };
+}
 
-  TestCase case4 = {{"a"}, "a"};        // single string
-  TestCase case5 = {{""}, ""};          // single empty string
-  TestCase case6 = {{"", "b"}, ""};     // empty string in the list
-  TestCase case7 = {{"ab", "a"}, "a"};  // later string is a prefix of the first
-  TestCase case8 = {{"a", "ab"}, "a"};  // first string is the prefix
-  TestCase case9 = {{"same", "same", "same"}, "same"};
-  TestCase case10 = {{"abc", "abd", "abx", "ab"},
-                     "ab"};  // shortest string is last
-  return {case1, case2, case3, case4, case5,
-          case6, case7, case8, case9, case10};
+string show(const vs& v) {
+  string s = "[";
+  rep(i, 0, sz(v)) {
+    if (i) s += ", ";
+    s += '"' + v[i] + '"';
+  }
+  return s + "]";
 }
 
 int main() {
   auto testCases = getTests();
-  int successCount = 0;
   Solution solution;
+  int passed = 0;
 
-  rep0(sz(testCases)) {
-    auto& tc = testCases[i];
-    auto result = solution.longestCommonPrefix(tc.input);
+  for (auto& tc : testCases) {
+    vs input = tc.input;  // copy in case the solution mutates its argument
+    string result = solution.longestCommonPrefix(input);
 
-    if (tc.ans == result) {
-      ++successCount;
+    if (result == tc.ans) {
+      ++passed;
     } else {
-      cout << "Failed Test case: " << i + 1 << endl;
+      cout << "FAIL: " << tc.name << "\n"
+           << "  input:    " << show(tc.input) << "\n"
+           << "  expected: \"" << tc.ans << "\"\n"
+           << "  actual:   \"" << result << "\"\n";
     }
   }
 
-  if (successCount == sz(testCases)) {
-    cout << "\n\nAll passed!\n\n";
-  }
-
-  return 0;
+  cout << passed << "/" << sz(testCases) << " passed\n";
+  return passed == sz(testCases) ? 0 : 1;
 }
