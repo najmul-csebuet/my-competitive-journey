@@ -44,6 +44,39 @@ class Solution {
   }
 };
 
+/*
+Alternative approaches (for interview discussion)
+--------------------------------------------------
+1. Sort, then compare first and last. After sorting, the common prefix of the
+whole set equals the common prefix of the lexicographically smallest and largest
+strings. This is O(S log n) but very short to write.
+
+2. Trie. Overkill for a single
+query, but it’s the right structure if you need many prefix queries.
+
+3. Divide and
+conquer / binary search on length. Same asymptotics, and good to know, but
+vertical scanning is the answer interviewers expect.
+*/
+
+class SolutionSort {
+ public:
+  string longestCommonPrefix(vs& strs) {
+    if (strs.empty()) return "";
+
+    sort(all(strs));
+
+    const string& first = strs.front();
+    const string& last = strs.back();
+
+    int i = 0;
+    int limit = min(sz(first), sz(last));
+    while (i < limit && first[i] == last[i]) ++i;
+
+    return first.substr(0, i);
+  }
+};
+
 struct TestCase {
   string name;
   vs input;
