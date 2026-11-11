@@ -28,9 +28,17 @@ class Solution {
  public:
   vector<vector<int>> threeSum(vector<int>& nums) {
     vvi result;
-    for(int i = 0; i < sz(nums); ++i) {
-        for(int j = i + 1; j < )
+    for (int i = 0; i < sz(nums); ++i) {
+      for (int j = i + 1; j < sz(nums); ++j) {
+        for (int k = j + 1; k < sz(nums); ++k) {
+          if (nums[i] + nums[j] + nums[k] == 0) {
+            result.pb({nums[i], nums[j], nums[k]});
+            cout << nums[i] << ", " << nums[j] << ", " << nums[k] << endl;
+          }
+        }
+      }
     }
+    return result;
   }
 };
 
@@ -55,6 +63,9 @@ int main() {
   rep0(sz(testCases)) {
     auto& tc = testCases[i];
     auto result = solution.threeSum(tc.input);
+
+    sort(all(tc.ans));
+    sort(all(result));
 
     if (tc.ans == result) {
       ++successCount;
