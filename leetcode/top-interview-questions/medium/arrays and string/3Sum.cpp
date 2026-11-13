@@ -24,7 +24,7 @@ using umii = unordered_map<int, int>;
 // 3-parameter version.
 #define repr(i, a, b) for (int i = (a) - 1; i >= (b); --i)
 
-class Solution {
+class Solution_TLE {
  public:
   vector<vector<int>> threeSum(vector<int>& nums) {
     vvi result;
@@ -32,10 +32,80 @@ class Solution {
       for (int j = i + 1; j < sz(nums); ++j) {
         for (int k = j + 1; k < sz(nums); ++k) {
           if (nums[i] + nums[j] + nums[k] == 0) {
-            result.pb({nums[i], nums[j], nums[k]});
-            cout << nums[i] << ", " << nums[j] << ", " << nums[k] << endl;
+            vi temp = {nums[i], nums[j], nums[k]};
+            sort(all(temp));
+
+            bool flag = true;
+            rep0(sz(result)) {
+              if (result[i] == temp) {
+                flag = false;
+                break;
+              }
+            }
+
+            if (flag) result.pb(temp);
           }
         }
+      }
+    }
+    return result;
+  }
+};
+
+class Solution_Improved_But_TLE {
+ public:
+  vector<vector<int>> threeSum(vector<int>& nums) {
+    vvi result;
+    umii map;
+    rep0(sz(nums)) map[nums[i]] = i + 1;
+
+    for (int i = 0; i < sz(nums); ++i) {
+      for (int j = i + 1; j < sz(nums); ++j) {
+        int gap = 0 - (nums[i] + nums[j]);
+        if (!map[gap] || map[gap] == i + 1 || map[gap] == j + 1) continue;
+
+        vi temp = {nums[i], nums[j], gap};
+        sort(all(temp));
+
+        bool flag = true;
+        rep0(sz(result)) {
+          if (result[i] == temp) {
+            flag = false;
+            break;
+          }
+        }
+
+        if (flag) result.pb(temp);
+      }
+    }
+    return result;
+  }
+};
+
+class Solution {
+ public:
+  vector<vector<int>> threeSum(vector<int>& nums) {
+    vvi result;
+    umii map;
+    rep0(sz(nums)) map[nums[i]] = i + 1;
+
+    for (int i = 0; i < sz(nums); ++i) {
+      for (int j = i + 1; j < sz(nums); ++j) {
+        int gap = 0 - (nums[i] + nums[j]);
+        if (!map[gap] || map[gap] == i + 1 || map[gap] == j + 1) continue;
+
+        vi temp = {nums[i], nums[j], gap};
+        sort(all(temp));
+
+        bool flag = true;
+        rep0(sz(result)) {
+          if (result[i] == temp) {
+            flag = false;
+            break;
+          }
+        }
+
+        if (flag) result.pb(temp);
       }
     }
     return result;
