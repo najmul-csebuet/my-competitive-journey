@@ -15,6 +15,9 @@ using pii = pair<int, int>;
 using umii = unordered_map<int, int>;
 
 // Useful Macros
+#define vec vector
+#define umap unordered_map
+
 #define pb push_back
 #define all(x) (x).begin(), (x).end()
 #define sz(x) (int)(x).size()
@@ -83,29 +86,41 @@ class Solution_Improved_But_TLE {
 };
 
 class Solution {
- public:
-  vector<vector<int>> threeSum(vector<int>& nums) {
+  vvi twoSum(vi& nums, int firstIndex, int target) {
     vvi result;
-    umii map;
-    rep0(sz(nums)) map[nums[i]] = i + 1;
-
+    umii seen;
     for (int i = 0; i < sz(nums); ++i) {
-      for (int j = i + 1; j < sz(nums); ++j) {
-        int gap = 0 - (nums[i] + nums[j]);
-        if (!map[gap] || map[gap] == i + 1 || map[gap] == j + 1) continue;
+      // check if current pair has matched with first number's index
+      if (i == firstIndex || seen[target - nums[i]] == firstIndex + 1) {
+        continue;
+      }
 
-        vi temp = {nums[i], nums[j], gap};
+      if (seen[target - nums[i]]) {
+        vi temp = {nums[firstIndex], nums[i], target - nums[i]};
         sort(all(temp));
+        result.pb(temp);
+      } else {
+        seen[nums[i]] = i + 1;
+      }
+    }
+    return result;
+  }
 
+ public:
+  vvi threeSum(vi& nums) {
+    vvi result;
+    rep(i, 0, sz(nums)) {
+      int target = -nums[i];
+      vvi twosum = twoSum(nums, i, target);
+      rep(i, 0, sz(twosum)) {
         bool flag = true;
-        rep0(sz(result)) {
-          if (result[i] == temp) {
+        rep(j, 0, sz(result)) {
+          if (result[j] == twosum[i]) {
             flag = false;
             break;
           }
         }
-
-        if (flag) result.pb(temp);
+        if (flag) result.pb(twosum[i]);
       }
     }
     return result;
