@@ -85,7 +85,7 @@ class Solution_Improved_But_TLE {
   }
 };
 
-class Solution {
+class Solution_Still_TLE_With_TwoSum {
   vvi twoSum(vi& nums, int firstIndex, int target) {
     vvi result;
     umii seen;
@@ -121,6 +121,56 @@ class Solution {
           }
         }
         if (flag) result.pb(twosum[i]);
+      }
+    }
+    return result;
+  }
+};
+
+class Solution {
+  vvi twoSum(vi& nums, int firstIndex, int target) {
+    vvi result;
+    umii seen;
+    rep(i, 0, sz(nums)) {
+      // if (i == firstIndex || (i > 0 && nums[i - 1] == nums[i])) {
+      //   continue;  // already explored this number
+      // }
+      int d = target - nums[i];
+      if (seen[d] && (i != firstIndex) && (seen[d] - 1) != firstIndex) {
+        vi temp = {nums[firstIndex], nums[i], d};
+        sort(all(temp));
+        result.pb(temp);
+      } else {
+        seen[nums[i]] = i + 1;
+      }
+    }
+    return result;
+  }
+
+ public:
+  vvi threeSum(vi& nums) {
+    vvi result;
+    sort(all(nums));
+    rep(i, 0, sz(nums) - 2) {
+      // if (i > 0 && nums[i - 1] == nums[i]) {
+      //   // check if this number is already explored for triplet searching
+      //   continue;
+      // }
+
+      int target = -nums[i];
+      vvi resp = twoSum(nums, i, target);
+      for (auto& a : resp) {
+        bool flag = true;
+        for (auto& b : result) {
+          if (a == b) {
+            // duplicate
+            flag = false;
+            break;
+          }
+        }
+        if (flag) {
+          result.pb(a);
+        }
       }
     }
     return result;
@@ -165,3 +215,9 @@ int main() {
 
   return 0;
 }
+
+/*
+
+Raw:    -1,  0,  1, 2, -1, -4
+Sorted: -4, -1, -1, 0,  1,  2
+*/
