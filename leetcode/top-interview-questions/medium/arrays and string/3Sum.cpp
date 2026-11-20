@@ -127,7 +127,7 @@ class Solution_Still_TLE_With_TwoSum {
   }
 };
 
-class Solution {
+class Solution1 {
   vvi twoSum(vi& nums, int firstIndex, int target) {
     vvi result;
     umii seen;
@@ -170,6 +170,43 @@ class Solution {
         }
         if (flag) {
           result.pb(a);
+        }
+      }
+    }
+    return result;
+  }
+};
+
+class Solution {
+ public:
+  vvi threeSum(vi& nums) {
+    vvi result;
+    sort(all(nums));
+    rep(i, 0, sz(nums)) {
+      int a = nums[i];
+
+      if (a > 0) {
+        break;
+      }
+
+      if (i > 0 && a == nums[i - 1]) {
+        continue;
+      }
+
+      int left = i + 1, right = sz(nums) - 1;
+      
+      while (left < right) {
+        int b = nums[left];
+        int c = nums[right];
+        if (a + b + c == 0) {
+          // found a triple
+          result.pb({a, b, c});
+          ++left;
+          --right;
+        } else if (a + b + c < 0) {
+          ++left;
+        } else {
+          --right;
         }
       }
     }
