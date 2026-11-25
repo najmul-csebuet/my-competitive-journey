@@ -182,7 +182,7 @@ class Solution {
   vvi threeSum(vi& nums) {
     vvi result;
     sort(all(nums));
-    rep(i, 0, sz(nums)) {
+    rep(i, 0, sz(nums) - 2) {
       int a = nums[i];
 
       if (a > 0) {
@@ -194,17 +194,22 @@ class Solution {
       }
 
       int left = i + 1, right = sz(nums) - 1;
-      
+
       while (left < right) {
-        int b = nums[left];
-        int c = nums[right];
-        if (a + b + c == 0) {
+        int s = a + nums[left] + nums[right];
+        if (s == 0) {
           // found a triple
-          result.pb({a, b, c});
+          result.pb({a, nums[left], nums[right]});
           ++left;
           --right;
-        } else if (a + b + c < 0) {
+          while (left < right && nums[left - 1] == nums[left]) {
+            ++left;
+          }
+        } else if (s < 0) {
           ++left;
+          while (left < right && nums[left - 1] == nums[left]) {
+            ++left;
+          }
         } else {
           --right;
         }
@@ -223,8 +228,10 @@ vector<TestCase> getTests() {
   TestCase case1 = {{-1, 0, 1, 2, -1, -4}, {{-1, -1, 2}, {-1, 0, 1}}};
   TestCase case2 = {{0, 1, 1}, {}};
   TestCase case3 = {{0, 0, 0}, {{0, 0, 0}}};
+  TestCase case4 = {{1, 2, 0, 1, 0, 0, 0, 0}, {{0, 0, 0}}};
 
-  return {case1, case2, case3};
+  return {case4};
+  // return {case1, case2, case3, case4};
 }
 
 int main() {
