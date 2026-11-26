@@ -19,6 +19,7 @@ using umii = unordered_map<int, int>;
 #define umap unordered_map
 
 #define pb push_back
+#define eb emplace_back
 #define all(x) (x).begin(), (x).end()
 #define sz(x) (int)(x).size()
 #define rep(i, a, b) for (int i = (a); i < (b); ++i)
@@ -180,38 +181,36 @@ class Solution1 {
 class Solution {
  public:
   vvi threeSum(vi& nums) {
+    int n = sz(nums);
     vvi result;
     sort(all(nums));
-    rep(i, 0, sz(nums) - 2) {
+
+    rep(i, 0, n - 2) {
       int a = nums[i];
 
-      if (a > 0) {
-        break;
-      }
+      // check if we can skip duplicate anchor
+      if (i > 0 && a == nums[i - 1]) continue;
 
-      if (i > 0 && a == nums[i - 1]) {
-        continue;
-      }
+      // optional pruning
+      // smallest triple from here on is already > 0
+      if (a + nums[i + 1] + nums[i + 2] > 0) break;
+      // check if current anchor is not a good fit.
+      if (a + nums[n - 2] + nums[n - 1] < 0) continue;
 
-      int left = i + 1, right = sz(nums) - 1;
-
+      int left = i + 1, right = n - 1;
       while (left < right) {
-        int s = a + nums[left] + nums[right];
-        if (s == 0) {
-          // found a triple
-          result.pb({a, nums[left], nums[right]});
+        int sum = a + nums[left] + nums[right];
+        if (sum > 0)
+          --right;
+        else if (sum < 0)
+          ++left;
+        else {
+          // found a triplet
+          result.eb(vi{a, nums[left], nums[right]});
           ++left;
           --right;
-          while (left < right && nums[left - 1] == nums[left]) {
-            ++left;
-          }
-        } else if (s < 0) {
-          ++left;
-          while (left < right && nums[left - 1] == nums[left]) {
-            ++left;
-          }
-        } else {
-          --right;
+          while (left < right && nums[left - 1] == nums[left]) ++left;
+          while (left < right && nums[right] == nums[right + 1]) --right;
         }
       }
     }
@@ -230,8 +229,7 @@ vector<TestCase> getTests() {
   TestCase case3 = {{0, 0, 0}, {{0, 0, 0}}};
   TestCase case4 = {{1, 2, 0, 1, 0, 0, 0, 0}, {{0, 0, 0}}};
 
-  return {case4};
-  // return {case1, case2, case3, case4};
+  return {case1, case2, case3, case4};
 }
 
 int main() {
