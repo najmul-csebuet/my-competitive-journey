@@ -5,6 +5,7 @@ using namespace std;
 using ll = long long;
 using vi = vector<int>;
 using vc = vector<char>;
+using vs = vector<string>;
 using vvi = vector<vector<int>>;
 using vll = vector<long long>;
 using mii = map<int, int>;
@@ -13,6 +14,7 @@ using umii = unordered_map<int, int>;
 
 // Useful Macros
 #define pb push_back
+#define eb emplace_back
 #define all(x) (x).begin(), (x).end()
 #define sz(x) (int)(x).size()
 #define rep(i, a, b) for (int i = (a); i < (b); ++i)
@@ -21,14 +23,55 @@ using umii = unordered_map<int, int>;
 // 3-parameter version.
 #define repr(i, a, b) for (int i = (a) - 1; i >= (b); --i)
 
+// leetcode
 class Solution {
  public:
-  void solve() {}
-
- private:
+  int solve(int nums) {}
 };
 
+struct TestCase {
+  int input;
+  int ans;
+};
+
+vector<TestCase> getTests() {
+  TestCase case1 = {1, 2};
+  TestCase case2 = {3, 4};
+  TestCase case3 = {5, 6};
+
+  return {case1, case2, case3};
+}
+
+int main() {
+  auto testCases = getTests();
+  int successCount = 0;
+  Solution solution;
+
+  rep0(sz(testCases)) {
+    auto& tc = testCases[i];
+    auto result = solution.solve(tc.input);
+
+    if (tc.ans == result) {
+      ++successCount;
+    } else {
+      cout << "Failed Test case: " << i + 1 << endl;
+    }
+  }
+
+  if (successCount == sz(testCases)) {
+    cout << "\n\nAll passed!\n\n";
+  }
+
+  return 0;
+}
+
 // For Codeforces input output handling
+/*
+class Solution {
+ public:
+  int solve() { return 0; }
+};
+
 int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
@@ -50,3 +93,4 @@ int main() {
   }
   return 0;
 }
+*/
